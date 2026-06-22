@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import styles from "./Passwordgeneretor.module.css";
 
-const passwordgeneretor = () => {
+const Passwordgeneretor = () => {
   const [rangelength, setRangelength] = useState(12);
   const [numbercheckbox, setNumbercheckbox] = useState(false);
   const [symbolcheckbox, setSymbolcheckbox] = useState(false);
@@ -11,92 +12,94 @@ const passwordgeneretor = () => {
   let uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   console.log(lowercaseLetters.charAt(3) === lowercaseLetters[3]);
 
-  let NamberHolder = "0123456789";
-  let symbolHolder = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-  let value = "";
+  const NamberHolder = "0123456789";
+  const symbolHolder = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
   function generetor() {
-    let password = lowercaseLetters + uppercaseLetters;
-    console.log(password, 0);
+    let availableChars = lowercaseLetters + uppercaseLetters;
 
     if (numbercheckbox) {
-      password += NamberHolder;
-      console.log(password, 1);
-
-      //   SetInputdisplayvalue(password);
+      availableChars += NamberHolder;
     }
     if (symbolcheckbox) {
-      password += symbolHolder;
-      console.log(password, 2);
-
-      //   SetInputdisplayvalue(password);
-      //   const rundomText = Math.floor(Math.random() * password.length);
-      //   console.log(rundomText);
-
-      //
+      availableChars += symbolHolder;
     }
+
+    let value = "";
     for (let i = 0; i < rangelength; i++) {
-      const rundomText = Math.floor(Math.random() * password.length);
-      value += password[rundomText];
-      console.log((value += password[rundomText]), "pass");
+      const randomIndex = Math.floor(Math.random() * availableChars.length);
+      value += availableChars[randomIndex];
     }
 
     SetInputdisplayvalue(value);
   }
   // practice
-  let s = "world";
-  const randomNamber = Math.floor(Math.random() * s.length);
-  const indexs = s[randomNamber];
-  console.log(indexs, "this is s");
+  // let s = "world";
+  // const randomNamber = Math.floor(Math.random() * s.length);
+  // const indexs = s[randomNamber];
+  // console.log(indexs, "this is s");
 
-  const arrayItem = ["aple", "banana", "kivi", "orangr", "mango"];
-  for (let i = 0; i < arrayItem.length; i++) {
-    const randomItem = Math.floor(Math.random() * arrayItem.length);
+  // const arrayItem = ["aple", "banana", "kivi", "orangr", "mango"];
+  // for (let i = 0; i < arrayItem.length; i++) {
+  //   const randomItem = Math.floor(Math.random() * arrayItem.length);
 
-    const indexArray = arrayItem[randomItem].toUpperCase();
+  //   const indexArray = arrayItem[randomItem].toUpperCase();
 
-    console.log(indexArray, "this is arrayItem");
-  }
+  //   console.log(indexArray, "this is arrayItem");
+  // }
 
   return (
-    <>
-      <h2>password generator</h2>
-      <input type="text" value={inputdisplayvalue} readOnly name="" id="" />
-      <button onClick={generetor}>Generate Password</button>
-      <br />
-      <label>Length: {rangelength}</label>
-      <input
-        type="range"
-        min="4"
-        max="20"
-        value={rangelength}
-        onChange={(e) => setRangelength(e.target.value)}
-        name=""
-        id=""
-      />
-      <br />
-      <label>
+    <div className={styles.generator}>
+      <div className={styles.card}>
+        <h2 className={styles.heading}>Password Generator</h2>
+
+        <div className={styles.output}>
+          {inputdisplayvalue || "Your secure password will appear here"}
+        </div>
+
+        <div className={styles.controls}>
+          <label className={styles.sliderLabel}>Length: {rangelength}</label>
+          <button className={styles.button} onClick={generetor}>
+            Generate Password
+          </button>
+        </div>
+
         <input
-          type="checkbox"
-          checked={numbercheckbox}
-          onChange={(e) => setNumbercheckbox(e.target.checked)}
-          name=""
-          id=""
+          type="range"
+          min="4"
+          max="20"
+          value={rangelength}
+          onChange={(e) => setRangelength(e.target.value)}
+          className={styles.slider}
         />
-        Include Numbers
-      </label>
-      <br />
-      <label>
-        <input
-          type="checkbox"
-          checked={symbolcheckbox}
-          onChange={(e) => setSymbolcheckbox(e.target.checked)}
-          name=""
-          id=""
-        />
-        Include Symbols
-      </label>
-    </>
+
+        <label className={styles.option}>
+          <input
+            type="checkbox"
+            checked={numbercheckbox}
+            onChange={(e) => setNumbercheckbox(e.target.checked)}
+            className={styles.checkbox}
+          />
+          Include Numbers
+        </label>
+
+        <label className={styles.option}>
+          <input
+            type="checkbox"
+            checked={symbolcheckbox}
+            onChange={(e) => setSymbolcheckbox(e.target.checked)}
+            className={styles.checkbox}
+          />
+          Include Symbols
+        </label>
+
+        <p className={styles.note}>
+          Tip: use a longer password with symbols and numbers for stronger
+          security.
+        </p>
+      </div>
+    </div>
   );
 };
 
-export default passwordgeneretor;
+export default Passwordgeneretor;
